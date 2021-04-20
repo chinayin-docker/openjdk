@@ -38,5 +38,4 @@ jobs:
           tags: |
             ${{ steps.vars.outputs.repository }}:${{ matrix.major }}-jdk
             ${{ steps.vars.outputs.repository }}:${{ matrix.major }}-jdk-${{ matrix.os }}
-            ${{ steps.vars.outputs.repository }}:${{ steps.vars.outputs.version }}-jdk
             ${{ steps.vars.outputs.repository }}:${{ steps.vars.outputs.version }}-jdk-${{ matrix.os }}
