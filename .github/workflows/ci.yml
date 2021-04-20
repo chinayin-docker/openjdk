@@ -1,0 +1,40 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: 0 0 * * *
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        major: [ 8 ]
+        os: [ slim ]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set variables
+        id: vars
+        run: |
+          echo ::set-output name=repository::${GITHUB_ACTOR}/$(basename ${GITHUB_REPOSITORY})
+          echo ::set-output name=version::$(grep ' JAVA_VERSION ' Dockerfile | awk '{print $3}')
+          echo ::set-output name=workdir::${{ matrix.major }}/${{ matrix.os }}
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USER }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: ${{ steps.vars.outputs.workdir }}
+          pull: true
+          push: true
+          tags: |
+            ${{ steps.vars.outputs.repository }}:${{ matrix.major }}-jdk-${{ matrix.os }}
+            ${{ steps.vars.outputs.repository }}:${{ steps.vars.outputs.version }}-jdk
+            ${{ steps.vars.outputs.repository }}:${{ steps.vars.outputs.version }}-jdk-${{ matrix.os }}
