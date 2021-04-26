@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        major: [ 8,11,15,16 ]
+        major: [ 11,15,16 ]
         os: [ slim ]
     steps:
       - name: Checkout code
@@ -39,7 +39,7 @@ jobs:
           context: ${{ steps.vars.outputs.workdir }}
           pull: true
           push: true
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           tags: |
             ${{ steps.vars.outputs.repository }}:${{ matrix.major }}-jdk
             ${{ steps.vars.outputs.repository }}:${{ matrix.major }}-jdk-${{ matrix.os }}
