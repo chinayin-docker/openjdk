@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        major: [ 16 ]
+        major: [ 8,11,15,16 ]
         os: [ slim ]
     steps:
       - name: Checkout code
