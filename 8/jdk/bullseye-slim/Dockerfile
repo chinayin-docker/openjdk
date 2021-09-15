@@ -1,11 +1,11 @@
 #
 #
 #--------------------------------------------------------------------------
-# 8-jdk
+# 8-jdk-bullseye-slim
 #--------------------------------------------------------------------------
 #
 
-FROM chinayin/debian:buster-slim
+FROM chinayin/debian:bullseye-slim
 
 RUN set -eux; \
 	apt-get update; \

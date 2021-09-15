@@ -11,17 +11,18 @@ jobs:
     strategy:
       matrix:
         major: [ 8,11,16 ]
-        os: [ slim ]
+        platform: [ jdk ]
+        os: [ buster-slim,bullseye-slim ]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Set variables
         id: vars
-        working-directory: ${{ matrix.major }}/${{ matrix.os }}
+        working-directory: ${{ matrix.major }}/${{ matrix.platform }}/${{ matrix.os }}
         run: |
           echo ::set-output name=repository::${GITHUB_ACTOR}/$(basename ${GITHUB_REPOSITORY})
           echo ::set-output name=version::$(grep ' JAVA_VERSION ' Dockerfile | awk '{print $3}')
-          echo ::set-output name=workdir::${{ matrix.major }}/${{ matrix.os }}
+          echo ::set-output name=workdir::${{ matrix.major }}/${{ matrix.platform }}/${{ matrix.os }}
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
@@ -39,6 +40,6 @@ jobs:
           push: true
           platforms: linux/amd64
           tags: |
-            ${{ steps.vars.outputs.repository }}:${{ matrix.major }}-jdk
-            ${{ steps.vars.outputs.repository }}:${{ matrix.major }}-jdk-${{ matrix.os }}
-            ${{ steps.vars.outputs.repository }}:${{ steps.vars.outputs.version }}-jdk-${{ matrix.os }}
+            ${{ steps.vars.outputs.repository }}:${{ matrix.major }}-${{ matrix.platform }}
+            ${{ steps.vars.outputs.repository }}:${{ matrix.major }}-${{ matrix.platform }}-${{ matrix.os }}
+            ${{ steps.vars.outputs.repository }}:${{ steps.vars.outputs.version }}-${{ matrix.platform }}-${{ matrix.os }}

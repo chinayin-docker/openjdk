@@ -1,7 +1,7 @@
 #
 #
 #--------------------------------------------------------------------------
-# 11-jdk
+# 16-jdk-buster-slim
 #--------------------------------------------------------------------------
 #
 
@@ -15,36 +15,29 @@ RUN set -eux; \
 	; \
 	rm -rf /var/lib/apt/lists/*
 
-ENV JAVA_HOME /usr/local/openjdk-11
-RUN { echo '#/bin/sh'; echo 'echo "$JAVA_HOME"'; } > /usr/local/bin/docker-java-home && chmod +x /usr/local/bin/docker-java-home && [ "$JAVA_HOME" = "$(docker-java-home)" ] # backwards compatibility
+ENV JAVA_HOME /usr/local/openjdk-16
 ENV PATH $JAVA_HOME/bin:$PATH
 
 # Default to UTF-8 file.encoding
 ENV LANG C.UTF-8
 
-# https://adoptopenjdk.net/upstream.html
+# https://jdk.java.net/
 # >
-# > What are these binaries?
+# > Java Development Kit builds, from Oracle
 # >
-# > These binaries are built by Red Hat on their infrastructure on behalf of the OpenJDK jdk8u and jdk11u projects. The binaries are created from the unmodified source code at OpenJDK. Although no formal support agreement is provided, please report any bugs you may find to https://bugs.java.com/.
-# >
-ENV JAVA_VERSION 11.0.12
-# https://github.com/docker-library/openjdk/issues/320#issuecomment-494050246
-# >
-# > I am the OpenJDK 8 and 11 Updates OpenJDK project lead.
-# > ...
-# > While it is true that the OpenJDK Governing Board has not sanctioned those releases, they (or rather we, since I am a member) didn't sanction Oracle's OpenJDK releases either. As far as I am aware, the lead of an OpenJDK project is entitled to release binary builds, and there is clearly a need for them.
-# >
+ENV JAVA_VERSION 16.0.2
 
 RUN set -eux; \
 	\
 	arch="$(dpkg --print-architecture)"; \
 	case "$arch" in \
 		'amd64') \
-			downloadUrl='https://github.com/AdoptOpenJDK/openjdk11-upstream-binaries/releases/download/jdk-11.0.12%2B7/OpenJDK11U-jdk_x64_linux_11.0.12_7.tar.gz'; \
+			downloadUrl='https://download.java.net/java/GA/jdk16.0.2/d4a915d82b4c4fbb9bde534da945d746/7/GPL/openjdk-16.0.2_linux-x64_bin.tar.gz'; \
+			downloadSha256='6c714ded7d881ca54970ec949e283f43d673a142fda1de79b646ddd619da9c0c'; \
 			;; \
 		'arm64') \
-			downloadUrl='https://github.com/AdoptOpenJDK/openjdk11-upstream-binaries/releases/download/jdk-11.0.12%2B7/OpenJDK11U-jdk_aarch64_linux_11.0.12_7.tar.gz'; \
+			downloadUrl='https://download.java.net/java/GA/jdk16.0.2/d4a915d82b4c4fbb9bde534da945d746/7/GPL/openjdk-16.0.2_linux-aarch64_bin.tar.gz'; \
+			downloadSha256='1ffb9c7748334945d9056b3324de3f797d906fce4dad86beea955153aa1e28fe'; \
 			;; \
 		*) echo >&2 "error: unsupported architecture: '$arch'"; exit 1 ;; \
 	esac; \
@@ -52,30 +45,12 @@ RUN set -eux; \
 	savedAptMark="$(apt-mark showmanual)"; \
 	apt-get update; \
 	apt-get install -y --no-install-recommends \
-		dirmngr \
-		gnupg \
 		wget \
 	; \
 	rm -rf /var/lib/apt/lists/*; \
 	\
 	wget --progress=dot:giga -O openjdk.tgz "$downloadUrl"; \
-	wget --progress=dot:giga -O openjdk.tgz.asc "$downloadUrl.sign"; \
-	\
-	export GNUPGHOME="$(mktemp -d)"; \
-# pre-fetch Andrew Haley's (the OpenJDK 8 and 11 Updates OpenJDK project lead) key so we can verify that the OpenJDK key was signed by it
-# (https://github.com/docker-library/openjdk/pull/322#discussion_r286839190)
-# we pre-fetch this so that the signature it makes on the OpenJDK key can survive "import-clean" in gpg
-	gpg --batch --keyserver keyserver.ubuntu.com --recv-keys EAC843EBD3EFDB98CC772FADA5CD6035332FA671; \
-# TODO find a good link for users to verify this key is right (https://mail.openjdk.java.net/pipermail/jdk-updates-dev/2019-April/000951.html is one of the only mentions of it I can find); perhaps a note added to https://adoptopenjdk.net/upstream.html would make sense?
-# no-self-sigs-only: https://salsa.debian.org/debian/gnupg2/commit/c93ca04a53569916308b369c8b218dad5ae8fe07
-	gpg --batch --keyserver keyserver.ubuntu.com --keyserver-options no-self-sigs-only --recv-keys CA5F11C6CE22644D42C6AC4492EF8D39DC13168F; \
-	gpg --batch --list-sigs --keyid-format 0xLONG CA5F11C6CE22644D42C6AC4492EF8D39DC13168F \
-		| tee /dev/stderr \
-		| grep '0xA5CD6035332FA671' \
-		| grep 'Andrew Haley'; \
-	gpg --batch --verify openjdk.tgz.asc openjdk.tgz; \
-	gpgconf --kill all; \
-	rm -rf "$GNUPGHOME"; \
+	echo "$downloadSha256 *openjdk.tgz" | sha256sum --strict --check -; \
 	\
 	mkdir -p "$JAVA_HOME"; \
 	tar --extract \

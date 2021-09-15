@@ -1,11 +1,11 @@
 #
 #
 #--------------------------------------------------------------------------
-# 16-jdk
+# 16-jdk-bullseye-slim
 #--------------------------------------------------------------------------
 #
 
-FROM chinayin/debian:buster-slim
+FROM chinayin/debian:bullseye-slim
 
 RUN set -eux; \
 	apt-get update; \
