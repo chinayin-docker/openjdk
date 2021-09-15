@@ -13,6 +13,9 @@ jobs:
         major: [ 8,11,16 ]
         platform: [ jdk ]
         os: [ buster-slim,bullseye-slim ]
+        include:
+          - major: 8
+            platform: jre
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
