@@ -1,4 +1,4 @@
-# Debian Base Image
+# Openjdk Image
 
 [![Docker Image CI](https://github.com/chinayin-docker/openjdk/actions/workflows/ci.yml/badge.svg?event=schedule)](https://github.com/chinayin-docker/openjdk/actions/workflows/ci.yml)
 ![Docker Image Version (latest semver)](https://img.shields.io/docker/v/chinayin/openjdk?sort=semver)
@@ -10,8 +10,8 @@ OpenJDK is an open-source implementation of the Java Platform, Standard Edition
 ### Supported tags and respective `Dockerfile` links
 
 ![](https://img.shields.io/docker/v/chinayin/openjdk/8-jdk)
+![](https://img.shields.io/docker/v/chinayin/openjdk/8-jre)
 ![](https://img.shields.io/docker/v/chinayin/openjdk/11-jdk)
-![](https://img.shields.io/docker/v/chinayin/openjdk/15-jdk)
 ![](https://img.shields.io/docker/v/chinayin/openjdk/16-jdk)
 
 # Use OpenJDK
