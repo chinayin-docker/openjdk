@@ -4,7 +4,7 @@ on:
     branches:
       - master
   schedule:
-    - cron: 0 0 * * *
+    - cron: 10 0 * * *
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,6 +16,7 @@ jobs:
         include:
           - major: 8
             platform: jre
+            os: [ buster-slim,bullseye-slim ]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
