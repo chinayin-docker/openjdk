@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        major: [ 8,11,16 ]
+        major: [ 8,11,17 ]
         platform: [ jdk ]
         os: [ buster-slim,bullseye-slim ]
         include:
