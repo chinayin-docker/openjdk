@@ -45,7 +45,7 @@ jobs:
           context: ${{ steps.vars.outputs.workdir }}
           pull: true
           push: true
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           tags: |
             ${{ steps.vars.outputs.repository }}:${{ matrix.major }}-${{ matrix.platform }}
             ${{ steps.vars.outputs.repository }}:${{ matrix.major }}-${{ matrix.platform }}-${{ matrix.os }}
