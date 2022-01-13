@@ -41,7 +41,6 @@ target "jdk-bullseye-slim" {
   tags     = [
     "${repository}:${major}-jdk",
     "${repository}:${major}-jdk-bullseye-slim",
-    "${repository}:${major}-jdk-slim",
     "${repository}:${version}-jdk",
   ]
 }
@@ -51,7 +50,6 @@ target "jre-bullseye-slim" {
   tags     = [
     "${repository}:${major}-jre",
     "${repository}:${major}-jre-bullseye-slim",
-    "${repository}:${major}-jre-slim",
     "${repository}:${version}-jre",
   ]
 }
