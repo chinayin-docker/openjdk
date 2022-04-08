@@ -15,7 +15,7 @@ jobs:
         os: [ buster-slim,bullseye-slim ]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Set variables
         id: vars
         working-directory: ${{ matrix.major }}/${{ matrix.platform }}/${{ matrix.os }}
@@ -52,7 +52,7 @@ jobs:
         os: [ buster-slim,bullseye-slim ]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Set variables
         id: vars
         working-directory: ${{ matrix.major }}/${{ matrix.platform }}/${{ matrix.os }}
