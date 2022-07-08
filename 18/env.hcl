@@ -1,11 +1,11 @@
 variable "version" {
-  default = "17.0.1"
+  default = "18.0.1.1"
 }
 variable "major" {
-  default = "17"
+  default = "18"
 }
 variable "minor" {
-  default = "17.0"
+  default = "18.0"
 }
 
 group "default" {

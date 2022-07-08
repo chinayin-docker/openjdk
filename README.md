@@ -12,7 +12,7 @@ OpenJDK is an open-source implementation of the Java Platform, Standard Edition
 ![](https://img.shields.io/docker/v/chinayin/openjdk/8-jdk)
 ![](https://img.shields.io/docker/v/chinayin/openjdk/8-jre)
 ![](https://img.shields.io/docker/v/chinayin/openjdk/11-jdk)
-![](https://img.shields.io/docker/v/chinayin/openjdk/16-jdk)
+![](https://img.shields.io/docker/v/chinayin/openjdk/18-jdk)
 
 # Use OpenJDK
 
