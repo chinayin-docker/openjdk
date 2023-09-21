@@ -18,7 +18,7 @@ jobs:
         id: vars
         run: |
           echo "repository=${GITHUB_ACTOR}/$(basename ${GITHUB_REPOSITORY})" >> $GITHUB_OUTPUT
-          echo "envhcl=${{ matrix.major }}/env.hcl" >> $GITHUB_OUTPUT
+          echo "bake_file=${{ matrix.major }}/env.hcl" >> $GITHUB_OUTPUT
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
       - name: Set up Docker Buildx
@@ -29,9 +29,9 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
       - name: Build and push
-        uses: docker/bake-action@v3
+        uses: docker/bake-action@v4
         with:
           pull: true
           push: true
           no-cache: true
-          files: docker-bake.hcl,${{ steps.vars.outputs.envhcl }}
+          files: docker-bake.hcl,${{ steps.vars.outputs.bake_file }}
