@@ -53,3 +53,22 @@ target "jre-bullseye-slim" {
     "${repository}:${version}-jre",
   ]
 }
+
+target "jdk-bookworm-slim" {
+  inherits = ["_all_platforms"]
+  context  = "${major}/jdk/bookworm-slim"
+  tags     = [
+    "${repository}:${major}-jdk",
+    "${repository}:${major}-jdk-bookworm-slim",
+    "${repository}:${version}-jdk",
+  ]
+}
+target "jre-bookworm-slim" {
+  inherits = ["_all_platforms"]
+  context  = "${major}/jre/bookworm-slim"
+  tags     = [
+    "${repository}:${major}-jre",
+    "${repository}:${major}-jre-bookworm-slim",
+    "${repository}:${version}-jre",
+  ]
+}
