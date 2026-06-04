@@ -1,5 +1,5 @@
 variable "version" {
-  default = "8u312"
+  default = "8u492"
 }
 variable "major" {
   default = "8"
@@ -9,6 +9,5 @@ variable "minor" {
 }
 
 group "default" {
-  targets = ["jdk-bullseye-slim", "jre-bullseye-slim"]
+  targets = ["jdk-debian", "jre-debian"]
 }
-

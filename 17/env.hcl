@@ -1,5 +1,5 @@
 variable "version" {
-  default = "17.0.10_7"
+  default = "17.0.19"
 }
 variable "major" {
   default = "17"
@@ -9,5 +9,5 @@ variable "minor" {
 }
 
 group "default" {
-  targets = ["jdk-bookworm-slim", "jre-bookworm-slim"]
+  targets = ["jdk-debian", "jre-debian"]
 }

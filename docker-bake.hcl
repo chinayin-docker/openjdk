@@ -35,40 +35,21 @@ target "_all_platforms" {
   platforms = platforms()
 }
 
-target "jdk-bullseye-slim" {
+target "jdk-debian" {
   inherits = ["_all_platforms"]
-  context  = "${major}/jdk/bullseye-slim"
+  context  = "${major}/jdk/debian"
   tags     = [
     "${repository}:${major}-jdk",
-    "${repository}:${major}-jdk-bullseye-slim",
+    "${repository}:${major}-jdk-debian",
     "${repository}:${version}-jdk",
   ]
 }
-target "jre-bullseye-slim" {
+target "jre-debian" {
   inherits = ["_all_platforms"]
-  context  = "${major}/jre/bullseye-slim"
+  context  = "${major}/jre/debian"
   tags     = [
     "${repository}:${major}-jre",
-    "${repository}:${major}-jre-bullseye-slim",
-    "${repository}:${version}-jre",
-  ]
-}
-
-target "jdk-bookworm-slim" {
-  inherits = ["_all_platforms"]
-  context  = "${major}/jdk/bookworm-slim"
-  tags     = [
-    "${repository}:${major}-jdk",
-    "${repository}:${major}-jdk-bookworm-slim",
-    "${repository}:${version}-jdk",
-  ]
-}
-target "jre-bookworm-slim" {
-  inherits = ["_all_platforms"]
-  context  = "${major}/jre/bookworm-slim"
-  tags     = [
-    "${repository}:${major}-jre",
-    "${repository}:${major}-jre-bookworm-slim",
+    "${repository}:${major}-jre-debian",
     "${repository}:${version}-jre",
   ]
 }
